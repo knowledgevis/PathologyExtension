@@ -62,7 +62,9 @@ class WsiMagnificationExtractor(Module):
         imageInfo = self.pydicom_extract_information(in_data.abspath)
         tiledImages = self.analyze_image_list(imageInfo)
         self.v('found ',len(tiledImages),'tiled images in this directory')
-        print('tiled images:',tiledImages)
+        #print('tiled images:',tiledImages)
+        for image in tiledImages:
+            print('tiled image:', image)
         matchingImage = self.return_magnitude_match(tiledImages,self.target_magnification,self.magnification_tolerance)
         # if we found a matching image, we will include it in the output data
         if matchingImage: 
@@ -89,6 +91,9 @@ class WsiMagnificationExtractor(Module):
 
             # add output data file to collection
             out_datas.add(out_data)
+        else:
+            print('no image with matching resolution was found in the input directory')
+            print('input directory was:', in_data.abspath)
 
 
 
